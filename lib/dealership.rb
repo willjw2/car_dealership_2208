@@ -27,4 +27,22 @@ class Dealership
   def details
     {"total_value" => total_value, "address" => @address}
   end
+  def average_price_of_car
+    price = (self.total_value / @inventory.length)
+    price.to_s.reverse.scan(/.{1,3}/).join(',').reverse
+  end
+  def cars_sorted_by_price
+    @inventory.sort_by {|car| car.total_cost}
+  end
+  def inventory_hash
+    hash = {}
+    @inventory.each do |car|
+      if hash[car.make] == nil
+        hash[car.make] = [car]
+      else
+        hash[car.make] << car
+      end
+    end
+    hash
+  end
 end
